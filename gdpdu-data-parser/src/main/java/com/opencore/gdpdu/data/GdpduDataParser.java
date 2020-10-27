@@ -12,19 +12,15 @@
  */
 package com.opencore.gdpdu.data;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+
 import javax.validation.ConstraintViolation;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.opencore.gdpdu.common.exceptions.ParsingException;
 import com.opencore.gdpdu.common.util.ClassRegistry;
@@ -34,14 +30,7 @@ import com.opencore.gdpdu.data.deserializers.Deserializers;
 import com.opencore.gdpdu.index.GdpduIndexParser;
 import com.opencore.gdpdu.index.GdpduIndexValidator;
 import com.opencore.gdpdu.index.annotations.Column;
-import com.opencore.gdpdu.index.models.DataSet;
-import com.opencore.gdpdu.index.models.Media;
-import com.opencore.gdpdu.index.models.Range;
-import com.opencore.gdpdu.index.models.Table;
-import com.opencore.gdpdu.index.models.VariableColumn;
-import com.opencore.gdpdu.index.models.VariableLength;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.opencore.gdpdu.index.models.*;
 
 // TODO: Make it so that index.xml doesn't need to be parsed again for each table
 
@@ -234,7 +223,7 @@ public final class GdpduDataParser {
       for (ConstraintViolation<DataSet> constraintViolation : constraintViolations) {
         LOG.warn("Violation found [{}] [{}]", constraintViolation.getPropertyPath(), constraintViolation.getMessage());
       }
-      throw new ParsingException("invalid index.xml file");
+      throw new ParsingException("invalid index.xml file. See previous warnings for details.");
     }
   }
 

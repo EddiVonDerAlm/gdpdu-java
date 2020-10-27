@@ -3,17 +3,15 @@ package com.opencore.gdpdu.data;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+
 import javax.validation.constraints.NotNull;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.opencore.gdpdu.common.exceptions.ParsingException;
 import com.opencore.gdpdu.data.deserializers.DeserializationContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class is not thread-safe.
@@ -181,7 +179,7 @@ public class GdpduDataLexer {
     LOG.trace("End of File");
     if (builder.length() > 0) {
       newRecord();
-    } else {
+    } else if (currentRecord.getColumns().size() > 0) { //do not add an empty record to the end. this occure if the last record ends with record_delimiter.
       records.add(currentRecord);
     }
 
