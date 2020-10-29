@@ -26,4 +26,9 @@ class Record {
   public void addColumn(String column) {
     columns.add(column);
   }
+
+  @Override
+  public String toString() {
+    return "Columns [" + columns + "]";
+  }
 }

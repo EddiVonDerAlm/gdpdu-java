@@ -41,6 +41,7 @@ public class Deserializers {
   }
 
   private static Enum<?> parseEnum(Class<Enum<?>> enumClass, String value) {
+    value = value.replace("-", "_");//replace not allowed char
     for (Enum<?> enumConstant : enumClass.getEnumConstants()) {
       if (enumConstant.name().equalsIgnoreCase(value)) {
         return enumConstant;
